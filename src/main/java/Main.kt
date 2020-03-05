@@ -9,6 +9,6 @@ fun main(){
 
     // match events between segments
 
-    // start writing
+    // write EDL file
 
 }

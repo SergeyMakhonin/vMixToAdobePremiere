@@ -53,7 +53,8 @@ data class Event(
 
 data class Segment(
     val timeStamp: String,
-    val videoStartTime: Long
+    val videoStartTime: Long,
+    val fileName: String
 )
 
 data class EventBetweenSegments(
