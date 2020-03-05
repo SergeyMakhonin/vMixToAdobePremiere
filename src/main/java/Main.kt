@@ -5,14 +5,21 @@ fun main(){
 
     // read xml
     val xmlReader = XmlReader(xmlPath)
+
+    // get all events & segments
     val events = xmlReader.getEvents()
-
-    // get all events
-
-    // get all segments
+    val segments = xmlReader.getSegments()
 
     // match events between segments
+    val inPointEventsBetweenSegments: ArrayList<EventBetweenSegments> = arrayListOf()
+    val outPointEventsBetweenSegments: ArrayList<EventBetweenSegments> = arrayListOf()
+    for (event in events){
+        // inPoint and outPoint parts
+        findInpointEventsBetweenSegments(event, segments)?.let { inPointEventsBetweenSegments.add(it) }
+        findOutPointEventsBetweenSegments(event, segments)?.let { outPointEventsBetweenSegments.add(it) }
+    }
 
     // write EDL file
 
 }
+
