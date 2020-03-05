@@ -3,6 +3,10 @@ fun main(){
     val xmlPath = "data/replay.xml"
     println("vMixToAdobePremiere started")
 
+    // read xml
+    val xmlReader = XmlReader(xmlPath)
+    val events = xmlReader.getEvents()
+
     // get all events
 
     // get all segments
