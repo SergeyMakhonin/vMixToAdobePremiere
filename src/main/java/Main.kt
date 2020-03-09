@@ -1,10 +1,20 @@
+import com.natpryce.konfig.*
+import com.natpryce.konfig.ConfigurationProperties.Companion.systemProperties
+
 fun main(){
-    val configuredFrames = 50
-    val xmlPath = "data/replay.xml"
+
+    // reading properties
+    val configuredFrames = Key("configuredFrames", intType)
+    val xmlPath = Key("xmlPath", stringType)
+    val edlPath = Key("edlPath", stringType)
+    val config = systemProperties() overriding
+            EnvironmentVariables() overriding
+            ConfigurationProperties.fromResource("config.properties")
+
     println("vMixToAdobePremiere started")
 
     // read xml
-    val xmlReader = XmlReader(xmlPath)
+    val xmlReader = XmlReader(config[xmlPath])
 
     // get all events & segments
     val events = xmlReader.getEvents()
@@ -15,11 +25,11 @@ fun main(){
     val outPointEventsBetweenSegments: ArrayList<EventBetweenSegments> = arrayListOf()
     for (event in events){
         // inPoint and outPoint parts
-        findInPointEventsBetweenSegments(event, segments, configuredFrames)?.let { inPointEventsBetweenSegments.add(it) }
-        findOutPointEventsBetweenSegments(event, segments, configuredFrames)?.let { outPointEventsBetweenSegments.add(it) }
+        findInPointEventsBetweenSegments(event, segments, config[configuredFrames])?.let { inPointEventsBetweenSegments.add(it) }
+        findOutPointEventsBetweenSegments(event, segments, config[configuredFrames])?.let { outPointEventsBetweenSegments.add(it) }
     }
 
     // write EDL file
-    val edlWriter = EdlWriter(xmlPath)
+    val edlWriter = EdlWriter(config[edlPath])
 }
 
