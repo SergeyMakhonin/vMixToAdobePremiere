@@ -1,3 +1,5 @@
+import java.sql.Time
+
 class TimeCode(var hours: Int, var minutes: Int, var seconds: Int, private val frames: Int){
 
     fun substractTimeCode(valueToSubstract: TimeCode): TimeCode {
@@ -28,6 +30,38 @@ class TimeCode(var hours: Int, var minutes: Int, var seconds: Int, private val f
         if (newHours < 0){
             newHours = 60 - newHours
             println("Hour limit exceeded while substracting TimeCodes")
+        }
+        return TimeCode(newHours, newMinutes, newSeconds, newFrames)
+    }
+
+    fun addTimeCode(valueToAdd: TimeCode): TimeCode{
+        var newSeconds: Int
+        var newMinutes: Int
+        var newHours: Int
+
+        // frames
+        var newFrames = frames + valueToAdd.frames
+        if (newFrames > 50){
+            newFrames -= 50
+            seconds++
+        }
+        //seconds
+        newSeconds = seconds + valueToAdd.seconds
+        if (newSeconds > 60){
+            newSeconds -= 60
+            minutes++
+        }
+        // minutes
+        newMinutes = minutes + valueToAdd.minutes
+        if (newMinutes > 60){
+            newMinutes -= 60
+            hours++
+        }
+        // hours
+        newHours = hours + valueToAdd.hours
+        if (newHours > 60){
+            newHours -= 60
+            println("Hour limit exceeded while summing TimeCodes")
         }
         return TimeCode(newHours, newMinutes, newSeconds, newFrames)
     }
