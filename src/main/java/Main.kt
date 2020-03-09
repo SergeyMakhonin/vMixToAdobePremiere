@@ -15,11 +15,11 @@ fun main(){
     val outPointEventsBetweenSegments: ArrayList<EventBetweenSegments> = arrayListOf()
     for (event in events){
         // inPoint and outPoint parts
-        findInpointEventsBetweenSegments(event, segments)?.let { inPointEventsBetweenSegments.add(it) }
-        findOutPointEventsBetweenSegments(event, segments)?.let { outPointEventsBetweenSegments.add(it) }
+        findInPointEventsBetweenSegments(event, segments, configuredFrames)?.let { inPointEventsBetweenSegments.add(it) }
+        findOutPointEventsBetweenSegments(event, segments, configuredFrames)?.let { outPointEventsBetweenSegments.add(it) }
     }
 
     // write EDL file
-
+    val edlWriter = EdlWriter(xmlPath)
 }
 

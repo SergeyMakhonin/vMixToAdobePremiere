@@ -45,12 +45,12 @@ class TimeCode(var hours: Int, var minutes: Int, var seconds: Int, private val f
     }
 }
 
-private fun evaluateTimeCode(
-    startTimeDiffEventVsSegment: Float,
+fun evaluateTimeCode(
+    nanoseconds: Float,
     configuredFrames: Int
 ): TimeCode {
     // timeCode seconds, frames, minutes, hours
-    val secondsInTotal = startTimeDiffEventVsSegment / 10000000
+    val secondsInTotal = nanoseconds / 10000000
     val frames: Int = ((secondsInTotal - secondsInTotal.toInt().toFloat()) * configuredFrames).toInt()
     val hours: Int = secondsInTotal.toInt() / 3600
 
