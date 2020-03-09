@@ -6,9 +6,9 @@ class EdlWriter(val xmlPath: String){
         println("EDL Writer initialized")
     }
 
-    fun writeHeader(){
+    fun writeHeader(title: String){
         println("Writing header...")
-        val headerString = ""
+        val headerString = "TITLE: $title\nFCM: NON-DROP FRAME"
         fileDescriptor.write(headerString)
     }
 

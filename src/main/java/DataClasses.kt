@@ -12,8 +12,3 @@ data class Segment(
     val offline: Boolean
 )
 
-data class EventBetweenSegments(
-    val event: Event,
-    val segmentFirstStart: Segment,
-    val segmentSecondStart: Segment
-)
