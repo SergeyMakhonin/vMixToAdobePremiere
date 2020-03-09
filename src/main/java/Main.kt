@@ -7,6 +7,8 @@ fun main(){
     val configuredFrames = Key("configuredFrames", intType)
     val xmlPath = Key("xmlPath", stringType)
     val edlPath = Key("edlPath", stringType)
+    val title = Key("title", stringType)
+    val titleNumber = Key("titleNumber", stringType)
     val config = systemProperties() overriding
             EnvironmentVariables() overriding
             ConfigurationProperties.fromResource("config.properties")
@@ -31,5 +33,6 @@ fun main(){
 
     // write EDL file
     val edlWriter = EdlWriter(config[edlPath])
+    edlWriter.writeHeader(config[title].replace("XX", config[titleNumber]))
 }
 

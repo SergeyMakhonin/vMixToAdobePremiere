@@ -1,13 +1,7 @@
 import java.io.File
 
-class FileWriter(filePath: String) {
-    private var filePath: String
-        get() {
-            return filePath
-        }
-        set(filePath: String){
-            this.filePath = filePath
-        }
+class FileWriter(val filePath: String) {
+
     fun write(line: String){
         File(filePath).printWriter().use { out ->
             out.println(line)

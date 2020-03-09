@@ -3,8 +3,8 @@ data class EventBetweenSegments(
     val segmentFirstStart: Segment,
     val segmentSecondStart: Segment,
     val configuredFrames: Int,
-    val startTimeDiffEventVsSegments: Long = event.inPointStartTime - segmentFirstStart.videoStartTime,
-    val timeCodeStartTimeDiffEventVsSegments: TimeCode = evaluateTimeCode(startTimeDiffEventVsSegments.toFloat(), configuredFrames)
+    val timeDiffEventVsSegments: Long,
+    val timeCodeDiffEventVsSegments: TimeCode
 )
 
 fun findOutPointEventsBetweenSegments(
@@ -17,10 +17,13 @@ fun findOutPointEventsBetweenSegments(
             and
             (event.outPointStartTime < segments[i + 1].videoStartTime)
         ) {
+            val timeDiffEventVsSegments = event.outPointStartTime - segments[i].videoStartTime
             return EventBetweenSegments(event = event,
                                         segmentFirstStart = segments[i],
                                         segmentSecondStart = segments[i + 1],
-                                        configuredFrames =  configuredFrames)
+                                        configuredFrames =  configuredFrames,
+                                        timeDiffEventVsSegments = timeDiffEventVsSegments,
+                                        timeCodeDiffEventVsSegments = evaluateTimeCode(timeDiffEventVsSegments.toFloat(), configuredFrames))
         }
     }
     return null
@@ -36,10 +39,13 @@ fun findInPointEventsBetweenSegments(
             and
             (event.inPointStartTime < segments[i + 1].videoStartTime)
         ) {
+            val timeDiffEventVsSegments = event.inPointStartTime - segments[i].videoStartTime
             return EventBetweenSegments(event = event,
-                                        segmentFirstStart = segments[i],
-                                        segmentSecondStart = segments[i + 1],
-                                        configuredFrames = configuredFrames)
+                segmentFirstStart = segments[i],
+                segmentSecondStart = segments[i + 1],
+                configuredFrames =  configuredFrames,
+                timeDiffEventVsSegments = timeDiffEventVsSegments,
+                timeCodeDiffEventVsSegments = evaluateTimeCode(timeDiffEventVsSegments.toFloat(), configuredFrames))
         }
     }
     return null
