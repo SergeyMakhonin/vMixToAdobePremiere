@@ -25,6 +25,7 @@ fun main(){
     // match events between segments
     val inPointEventsBetweenSegments: ArrayList<EventBetweenSegments> = arrayListOf()
     val outPointEventsBetweenSegments: ArrayList<EventBetweenSegments> = arrayListOf()
+    println("Matching Events between Segments...")
     for (event in events){
         // inPoint and outPoint parts
         findInPointEventsBetweenSegments(event, segments, config[configuredFrames])?.let { inPointEventsBetweenSegments.add(it) }
@@ -34,5 +35,6 @@ fun main(){
     // write EDL file
     val edlWriter = EdlWriter(config[edlPath])
     edlWriter.writeHeader(config[title].replace("XX", config[titleNumber]))
+    edlWriter.writeBody(inPointEvents = inPointEventsBetweenSegments, outPointEvents = outPointEventsBetweenSegments)
 }
 

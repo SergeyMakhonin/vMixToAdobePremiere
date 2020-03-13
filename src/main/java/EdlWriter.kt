@@ -9,7 +9,7 @@ class EdlWriter(val xmlPath: String){
     fun writeHeader(title: String){
         println("Writing header...")
         val headerString = "TITLE: $title\nFCM: NON-DROP FRAME"
-        fileDescriptor.write(headerString)
+        fileDescriptor.write(headerString + "\n")
     }
 
     fun writeBody(inPointEvents: ArrayList<EventBetweenSegments>,
@@ -18,7 +18,7 @@ class EdlWriter(val xmlPath: String){
 
         // check length is equal
         if (inPointEvents.size == outPointEvents.size){
-            this.fileDescriptor.write("\n")
+            fileDescriptor.append("\n")
             val timeCodeDeltaSum: TimeCode = TimeCode(0, 0, 0, 0)
 
             // loop via eventsBetweenSegments
@@ -31,11 +31,11 @@ class EdlWriter(val xmlPath: String){
                                 "$inPointTimeCode " +
                                 "$outPointTimeCode " +
                                 "$timeCodeDeltaSum " +
-                                "$timeCodeDelta\n"
+                                "$timeCodeDelta"
                 val bodyLine2 =
                     "* FROM CLIP NAME: WOL LIV 23.01.2020 21-30-00 (0DD69896-BFC1-4BBF-BF14-80FA194AFB52).mov"
-                this.fileDescriptor.write(bodyLine1)
-                this.fileDescriptor.write(bodyLine2)
+                fileDescriptor.append(bodyLine1 + "\n")
+                fileDescriptor.append(bodyLine2 + "\n")
             }
         }
         else{

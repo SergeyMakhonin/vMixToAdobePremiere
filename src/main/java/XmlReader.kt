@@ -13,12 +13,14 @@ class XmlReader (xmlPath: String){
     }
 
     private fun readXml(): Document {
+        println("Reading XML...")
         val builderFactory = DocumentBuilderFactory.newInstance()
         val documentBuilder = builderFactory.newDocumentBuilder()
         return documentBuilder.parse(xmlFile)
     }
 
     fun getEvents(): ArrayList<Event> {
+        println("Getting Events...")
         // find all events
         val events: ArrayList<Event> = arrayListOf()
 
@@ -41,6 +43,7 @@ class XmlReader (xmlPath: String){
     }
 
     fun getSegments(): ArrayList<Segment> {
+        println("Getting Segments...")
         // find all events
         val segments: ArrayList<Segment> = arrayListOf()
 
