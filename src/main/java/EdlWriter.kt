@@ -1,5 +1,3 @@
-import java.io.File
-
 class EdlWriter(val xmlPath: String){
     val fileDescriptor = FileWriter(xmlPath)
     init {
@@ -25,8 +23,8 @@ class EdlWriter(val xmlPath: String){
             for (i in 0 until inPointEvents.size) {
                 val inPointTimeCode = inPointEvents[i].segmentFirstStart.timeStampTimeCode.addTimeCode(inPointEvents[i].timeCodeDiffEventVsSegments)
                 val outPointTimeCode = outPointEvents[i].segmentFirstStart.timeStampTimeCode.addTimeCode(outPointEvents[i].timeCodeDiffEventVsSegments)
-                val timeCodeDelta = outPointTimeCode.substractTimeCode(inPointTimeCode)
-                timeCodeDeltaSum.addTimeCode(timeCodeDelta)
+                val timeCodeDelta = outPointTimeCode.subtractTimeCode(inPointTimeCode)
+                val timeCodeDeltaSum = timeCodeDeltaSum.addTimeCode(timeCodeDelta)
                 val bodyLine1 = "XXX  CDKMN24C V     C        " +
                                 "$inPointTimeCode " +
                                 "$outPointTimeCode " +

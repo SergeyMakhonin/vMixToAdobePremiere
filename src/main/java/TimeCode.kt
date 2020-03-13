@@ -1,43 +1,40 @@
-import java.sql.Time
+import kotlin.math.abs
 
 class TimeCode(var hours: Int, var minutes: Int, var seconds: Int, private val frames: Int){
 
-    fun substractTimeCode(valueToSubstract: TimeCode): TimeCode {
+    fun subtractTimeCode(valueToSubtract: TimeCode): TimeCode {
         var newSeconds: Int
         var newMinutes: Int
         var newHours: Int
 
         // frames
-        var newFrames = frames - valueToSubstract.frames
+        var newFrames = frames - valueToSubtract.frames
         if (newFrames < 0){
-            newFrames = 50 - newFrames
+            newFrames = 50 - abs(newFrames)
             seconds--
         }
         //seconds
-        newSeconds = seconds - valueToSubstract.seconds
+        newSeconds = seconds - valueToSubtract.seconds
         if (newSeconds < 0){
-            newSeconds = 60 - newSeconds
+            newSeconds = 60 - abs(newSeconds)
             minutes--
         }
         // minutes
-        newMinutes = minutes - valueToSubstract.minutes
+        newMinutes = minutes - valueToSubtract.minutes
         if (newMinutes < 0){
-            newMinutes = 60 - newMinutes
+            newMinutes = 60 - abs(newMinutes)
             hours--
         }
         // hours
-        newHours = hours - valueToSubstract.hours
+        newHours = hours - valueToSubtract.hours
         if (newHours < 0){
-            newHours = 60 - newHours
+            newHours = 24 - abs(newHours)
             println("Hour limit exceeded while substracting TimeCodes")
         }
         return TimeCode(newHours, newMinutes, newSeconds, newFrames)
     }
 
     fun addTimeCode(valueToAdd: TimeCode): TimeCode{
-        var newSeconds: Int
-        var newMinutes: Int
-        var newHours: Int
 
         // frames
         var newFrames = frames + valueToAdd.frames
@@ -46,21 +43,21 @@ class TimeCode(var hours: Int, var minutes: Int, var seconds: Int, private val f
             seconds++
         }
         //seconds
-        newSeconds = seconds + valueToAdd.seconds
+        var newSeconds: Int = seconds + valueToAdd.seconds
         if (newSeconds > 60){
             newSeconds -= 60
             minutes++
         }
         // minutes
-        newMinutes = minutes + valueToAdd.minutes
+        var newMinutes: Int = minutes + valueToAdd.minutes
         if (newMinutes > 60){
             newMinutes -= 60
             hours++
         }
         // hours
-        newHours = hours + valueToAdd.hours
-        if (newHours > 60){
-            newHours -= 60
+        var newHours: Int = hours + valueToAdd.hours
+        if (newHours > 24){
+            newHours -= 24
             println("Hour limit exceeded while summing TimeCodes")
         }
         return TimeCode(newHours, newMinutes, newSeconds, newFrames)
