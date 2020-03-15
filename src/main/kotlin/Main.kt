@@ -1,9 +1,10 @@
 import com.natpryce.konfig.*
 import com.natpryce.konfig.ConfigurationProperties.Companion.systemProperties
 
-fun main(){
+fun main(vararg configInput: String){
 
-    // reading properties
+    // reading properties from file
+    println("Reading configuration...")
     val configuredFrames = Key("configuredFrames", intType)
     val xmlPath = Key("xmlPath", stringType)
     val edlPath = Key("edlPath", stringType)
@@ -12,6 +13,12 @@ fun main(){
     val config = systemProperties() overriding
             EnvironmentVariables() overriding
             ConfigurationProperties.fromResource("config.properties")
+
+    // check if manual settings given
+    if (configInput.isNotEmpty()){
+        println("Applying GUI input...")
+        config[configuredFrames]
+    }
 
     println("vMixToAdobePremiere started")
 

@@ -1,5 +1,5 @@
 class EdlWriter(val xmlPath: String){
-    val fileDescriptor = FileWriter(xmlPath)
+    val fileDescriptor = FileGrinder(xmlPath)
     init {
         println("EDL Writer initialized")
     }
