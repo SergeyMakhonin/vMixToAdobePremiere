@@ -17,14 +17,13 @@ class EdlWriter(val xmlPath: String){
         // check length is equal
         if (inPointEvents.size == outPointEvents.size){
             fileDescriptor.append("\n")
-            val timeCodeDeltaSum: TimeCode = TimeCode(0, 0, 0, 0)
+            var timeCodeDeltaSum: TimeCode = TimeCode(0, 0, 0, 0)
 
             // loop via eventsBetweenSegments
             for (i in 0 until inPointEvents.size) {
                 val inPointTimeCode = inPointEvents[i].segmentFirstStart.timeStampTimeCode.addTimeCode(inPointEvents[i].timeCodeDiffEventVsSegments)
                 val outPointTimeCode = outPointEvents[i].segmentFirstStart.timeStampTimeCode.addTimeCode(outPointEvents[i].timeCodeDiffEventVsSegments)
                 val timeCodeDelta = outPointTimeCode.subtractTimeCode(inPointTimeCode)
-                val timeCodeDeltaSum = timeCodeDeltaSum.addTimeCode(timeCodeDelta)
                 val bodyLine1 = "XXX  CDKMN24C V     C        " +
                                 "$inPointTimeCode " +
                                 "$outPointTimeCode " +
@@ -34,6 +33,7 @@ class EdlWriter(val xmlPath: String){
                     "* FROM CLIP NAME: WOL LIV 23.01.2020 21-30-00 (0DD69896-BFC1-4BBF-BF14-80FA194AFB52).mov"
                 fileDescriptor.append(bodyLine1 + "\n")
                 fileDescriptor.append(bodyLine2 + "\n")
+                timeCodeDeltaSum = timeCodeDeltaSum.addTimeCode(timeCodeDelta)
             }
         }
         else{
