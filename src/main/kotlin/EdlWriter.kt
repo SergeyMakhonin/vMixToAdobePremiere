@@ -1,5 +1,5 @@
-class EdlWriter(val xmlPath: String){
-    val fileDescriptor = FileGrinder(xmlPath)
+class EdlWriter(private val xmlPath: String){
+    private val fileDescriptor = FileGrinder(xmlPath)
     init {
         println("EDL Writer initialized")
     }
@@ -14,30 +14,33 @@ class EdlWriter(val xmlPath: String){
                   outPointEvents: ArrayList<EventBetweenSegments>){
         println("Writing body...")
 
-        // check length is equal
-        if (inPointEvents.size == outPointEvents.size){
+        // in case length is not equal only matching events will be processed
+        // loop via eventsBetweenSegments
+        try {
             fileDescriptor.append("\n")
             var timeCodeDeltaSum: TimeCode = TimeCode(0, 0, 0, 0)
-
-            // loop via eventsBetweenSegments
             for (i in 0 until inPointEvents.size) {
+
+                // line 1 assemble
                 val inPointTimeCode = inPointEvents[i].segmentFirstStart.timeStampTimeCode.addTimeCode(inPointEvents[i].timeCodeDiffEventVsSegments)
                 val outPointTimeCode = outPointEvents[i].segmentFirstStart.timeStampTimeCode.addTimeCode(outPointEvents[i].timeCodeDiffEventVsSegments)
                 val timeCodeDelta = outPointTimeCode.subtractTimeCode(inPointTimeCode)
-                val bodyLine1 = "XXX  CDKMN24C V     C        " +
-                                "$inPointTimeCode " +
-                                "$outPointTimeCode " +
-                                "$timeCodeDeltaSum " +
-                                "$timeCodeDelta"
+                val bodyLine1 = "${paddingSymbolFormatting(i, 3, '0')}  CDKMN24C V     C        " +
+                        "$inPointTimeCode " +
+                        "$outPointTimeCode " +
+                        "$timeCodeDeltaSum " +
+                        "$timeCodeDelta"
+
+                // line 2 assemble
+                val timeStamp = inPointEvents[i].segmentFirstStart.timeStamp.split('.')[0].replace('T', ' ')
                 val bodyLine2 =
-                    "* FROM CLIP NAME: WOL LIV 23.01.2020 21-30-00 (0DD69896-BFC1-4BBF-BF14-80FA194AFB52).mov"
+                        "* FROM CLIP NAME: WOL LIV  $timeStamp (0DD69896-BFC1-4BBF-BF14-80FA194AFB52).mov"
                 fileDescriptor.append(bodyLine1 + "\n")
                 fileDescriptor.append(bodyLine2 + "\n")
                 timeCodeDeltaSum = timeCodeDeltaSum.addTimeCode(timeCodeDelta)
             }
-        }
-        else{
-            println("InPoint and OutPoint events quantities are not equal")
+        } catch (ex: IndexOutOfBoundsException){
+            println("InPoint (${inPointEvents.size}) and OutPoint (${outPointEvents.size}) events quantities are not equal")
         }
     }
 }
