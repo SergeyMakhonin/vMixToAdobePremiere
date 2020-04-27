@@ -34,7 +34,7 @@ class EdlWriter(private val xmlPath: String){
                 // line 2 assemble
                 val timeStamp = inPointEvents[i].segmentFirstStart.timeStamp.split('.')[0].replace('T', ' ')
                 val bodyLine2 =
-                        "* FROM CLIP NAME: WOL LIV  $timeStamp (0DD69896-BFC1-4BBF-BF14-80FA194AFB52).mov"
+                        "* FROM CLIP NAME: WOL LIV  $timeStamp ${inPointEvents[i].segmentFirstStart.fileName}"
                 fileDescriptor.append(bodyLine1 + "\n")
                 fileDescriptor.append(bodyLine2 + "\n")
                 timeCodeDeltaSum = timeCodeDeltaSum.addTimeCode(timeCodeDelta)
