@@ -38,6 +38,9 @@ class EdlWriter(private val xmlPath: String){
                 fileDescriptor.append(bodyLine1 + "\n")
                 fileDescriptor.append(bodyLine2 + "\n")
                 timeCodeDeltaSum = timeCodeDeltaSum.addTimeCode(timeCodeDelta)
+
+                // debug
+                println("Iteration $i: event ID ${inPointEvents[i].event.id} matched event ID ${outPointEvents[i].event.id}")
             }
         } catch (ex: IndexOutOfBoundsException){
             println("InPoint (${inPointEvents.size}) and OutPoint (${outPointEvents.size}) events quantities are not equal")
