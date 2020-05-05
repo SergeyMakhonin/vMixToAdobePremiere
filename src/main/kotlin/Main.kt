@@ -1,5 +1,6 @@
 import com.natpryce.konfig.*
 import com.natpryce.konfig.ConfigurationProperties.Companion.systemProperties
+import java.io.File
 
 fun main(vararg configInput: String){
 
@@ -12,7 +13,7 @@ fun main(vararg configInput: String){
     val titleNumber = Key("titleNumber", stringType)
     val config = systemProperties() overriding
             EnvironmentVariables() overriding
-            ConfigurationProperties.fromResource("config.properties")
+            ConfigurationProperties.fromFile(File("config.properties"))
 
     // check if manual settings given
     if (configInput.isNotEmpty()){
