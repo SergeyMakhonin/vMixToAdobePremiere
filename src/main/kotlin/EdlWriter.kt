@@ -1,5 +1,6 @@
-class EdlWriter(private val xmlPath: String){
-    private val fileDescriptor = FileGrinder(xmlPath)
+class EdlWriter(private val xmlDir: String){
+    private val timeStamp = Time().getTimeStamp()
+    private val fileDescriptor = FileGrinder(xmlDir, "generated_$timeStamp.edl")
     init {
         println("EDL Writer initialized")
     }
