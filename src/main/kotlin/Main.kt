@@ -28,7 +28,7 @@ fun main(vararg configInput: String){
 
     // get all events & segments
     val events = xmlReader.getEvents()
-    val segments = xmlReader.getSegments()
+    val segments = xmlReader.getSegments(config[configuredFrames])
 
     // match events between segments
     val inPointEventsBetweenSegments: ArrayList<EventBetweenSegments> = arrayListOf()

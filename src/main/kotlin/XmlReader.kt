@@ -42,7 +42,7 @@ class XmlReader (xmlPath: String){
         return events
     }
 
-    fun getSegments(): ArrayList<Segment> {
+    fun getSegments(configuredFrames: Int): ArrayList<Segment> {
         println("Getting Segments...")
         // find all events
         val segments: ArrayList<Segment> = arrayListOf()
@@ -60,7 +60,8 @@ class XmlReader (xmlPath: String){
                     videoStartTime = element.getElementsByTagName("videoStartTime").item(0).textContent.toLong(),
                     audioStartTime = element.getElementsByTagName("audioStartTime").item(0).textContent.toLong(),
                     fileName = element.getElementsByTagName("filename").item(0).textContent,
-                    offline = element.getElementsByTagName("offline").item(0).textContent!!.toBoolean()
+                    offline = element.getElementsByTagName("offline").item(0).textContent!!.toBoolean(),
+                    configuredFrames = configuredFrames
                 ))
             }
         }
