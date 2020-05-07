@@ -12,8 +12,8 @@ fun findOutPointEventsBetweenSegments(
     segments: ArrayList<Segment>,
     configuredFrames: Int
 ): EventBetweenSegments? {
+    for (i in 0 until segments.size) {
     try {
-        for (i in 0 until segments.size) {
             if ((event.outPointStartTime > segments[i].videoStartTime)
                     and
                     (event.outPointStartTime < segments[i + 1].videoStartTime)
@@ -26,12 +26,19 @@ fun findOutPointEventsBetweenSegments(
                         timeDiffEventVsSegments = timeDiffEventVsSegments,
                         timeCodeDiffEventVsSegments = evaluateTimeCode(timeDiffEventVsSegments.toFloat(), configuredFrames))
             }
-        }
-        return null
     } catch (ex: IndexOutOfBoundsException) {
         println("Reached the end of the Segments in vMix XML file while matching to OutPointEvent")
-        return null
+            val timeDiffEventVsSegments = event.outPointStartTime - segments[i].videoStartTime
+            return EventBetweenSegments(event = event,
+                    segmentFirstStart = segments[i],
+                    segmentSecondStart = segments[i],
+                    configuredFrames = configuredFrames,
+                    timeDiffEventVsSegments = timeDiffEventVsSegments,
+                    timeCodeDiffEventVsSegments = evaluateTimeCode(timeDiffEventVsSegments.toFloat(), configuredFrames))
+
     }
+    }
+    return null
 }
 
 fun findInPointEventsBetweenSegments(
@@ -39,8 +46,8 @@ fun findInPointEventsBetweenSegments(
     segments: ArrayList<Segment>,
     configuredFrames: Int
 ): EventBetweenSegments? {
-    try {
-        for (i in 0 until segments.size) {
+    for (i in 0 until segments.size) {
+        try {
             if ((event.inPointStartTime > segments[i].videoStartTime)
                     and
                     (event.inPointStartTime < segments[i + 1].videoStartTime)
@@ -49,14 +56,20 @@ fun findInPointEventsBetweenSegments(
                 return EventBetweenSegments(event = event,
                         segmentFirstStart = segments[i],
                         segmentSecondStart = segments[i + 1],
-                        configuredFrames =  configuredFrames,
+                        configuredFrames = configuredFrames,
                         timeDiffEventVsSegments = timeDiffEventVsSegments,
                         timeCodeDiffEventVsSegments = evaluateTimeCode(timeDiffEventVsSegments.toFloat(), configuredFrames))
             }
+        } catch (ex: IndexOutOfBoundsException) {
+            println("Reached the end of the Segments in vMix XML file while matching to InPointEvent")
+                val timeDiffEventVsSegments = event.inPointStartTime - segments[i].videoStartTime
+                return EventBetweenSegments(event = event,
+                        segmentFirstStart = segments[i],
+                        segmentSecondStart = segments[i],
+                        configuredFrames = configuredFrames,
+                        timeDiffEventVsSegments = timeDiffEventVsSegments,
+                        timeCodeDiffEventVsSegments = evaluateTimeCode(timeDiffEventVsSegments.toFloat(), configuredFrames))
         }
-        return null
-    } catch (ex: IndexOutOfBoundsException) {
-        println("Reached the end of the Segments in vMix XML file while matching to OutPointEvent")
-        return null
     }
+    return null
 }
