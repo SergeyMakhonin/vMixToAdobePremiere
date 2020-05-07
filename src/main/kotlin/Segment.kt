@@ -14,7 +14,11 @@ fun timeStampToTimeCode(timeStamp: String, configuredFrames: Int): TimeCode {
     val timeParts = time.split(":", limit = 3)
     val secondsDotFrames = timeParts[2].split(".", limit = 2)
     val seconds = secondsDotFrames[0].toInt()
-    val frames = secondsDotFrames[1].split("+")[0].toInt()*configuredFrames/1000
+    val framesInFloatSeconds = secondsDotFrames[1].split("+")[0]
+    val secondsWithFloat = "$seconds.$framesInFloatSeconds".toDouble()
+    val secondsDecimalPart = secondsWithFloat - secondsWithFloat.toInt()
+    val frames = secondsDecimalPart * configuredFrames
+
     val tzDelta = secondsDotFrames[1].split("+")[1]
-    return TimeCode(timeParts[0].toInt(), timeParts[1].toInt(), seconds, frames)
+    return TimeCode(timeParts[0].toInt(), timeParts[1].toInt(), seconds, frames.toInt())
 }
