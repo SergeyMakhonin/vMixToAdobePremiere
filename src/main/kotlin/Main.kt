@@ -43,6 +43,6 @@ fun main(vararg configInput: String){
     // write EDL file
     val edlWriter = EdlWriter(config[edlPath])
     edlWriter.writeHeader(config[title].replace("XX", config[titleNumber]))
-    edlWriter.writeBody(inPointEvents = inPointEventsBetweenSegments, outPointEvents = outPointEventsBetweenSegments)
+    edlWriter.writeBody(title = config[title], inPointEvents = inPointEventsBetweenSegments, outPointEvents = outPointEventsBetweenSegments)
 }
 

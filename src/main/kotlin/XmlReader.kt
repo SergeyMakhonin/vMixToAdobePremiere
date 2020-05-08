@@ -57,9 +57,8 @@ class XmlReader (xmlPath: String){
                 val element = parsedSegment as Element
                 segments.add(Segment(
                     timeStamp = element.getElementsByTagName("timestamp").item(0).textContent,
-                    // divide by 10 because of different seconds dimention
-                    videoStartTime = element.getElementsByTagName("videoStartTime").item(0).textContent.toLong()/10,
-                    audioStartTime = element.getElementsByTagName("audioStartTime").item(0).textContent.toLong()/10,
+                    videoStartTime = element.getElementsByTagName("videoStartTime").item(0).textContent.toLong(),
+                    audioStartTime = element.getElementsByTagName("audioStartTime").item(0).textContent.toLong(),
                     fileName = element.getElementsByTagName("filename").item(0).textContent,
                     offline = element.getElementsByTagName("offline").item(0).textContent!!.toBoolean(),
                     configuredFrames = configuredFrames

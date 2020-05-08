@@ -14,19 +14,19 @@ class TimeCode(var hours: Int, var minutes: Int, var seconds: Int, private val f
             newSeconds -= 1
         }
         //seconds
-        newSeconds = seconds - valueToSubtract.seconds
+        newSeconds = newSeconds - valueToSubtract.seconds
         if (newSeconds < 0){
             newSeconds = 60 - abs(newSeconds)
             newMinutes -=1
         }
         // minutes
-        newMinutes = minutes - valueToSubtract.minutes
+        newMinutes = newMinutes - valueToSubtract.minutes
         if (newMinutes < 0){
             newMinutes = 60 - abs(newMinutes)
             newHours -=1
         }
         // hours
-        newHours = hours - valueToSubtract.hours
+        newHours = newHours - valueToSubtract.hours
         if (newHours < 0){
             newHours = 24 - abs(newHours)
             println("Hour limit exceeded while substracting TimeCodes")
@@ -52,13 +52,13 @@ class TimeCode(var hours: Int, var minutes: Int, var seconds: Int, private val f
             newMinutes +=1
         }
         // minutes
-        newMinutes = minutes + valueToAdd.minutes
+        newMinutes = newMinutes + valueToAdd.minutes
         if (newMinutes >= 60){
             newMinutes -= 60
             newHours +=1
         }
         // hours
-        newHours = hours + valueToAdd.hours
+        newHours = newHours + valueToAdd.hours
         if (newHours >= 24){
             newHours -= 24
             println("Hour limit exceeded while summing TimeCodes")

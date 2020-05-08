@@ -1,6 +1,6 @@
-class EdlWriter(private val xmlDir: String){
+class EdlWriter(private val edlDir: String){
     private val timeStamp = Time().getTimeStamp()
-    private val fileDescriptor = FileGrinder(xmlDir, "generated_$timeStamp.edl")
+    private val fileDescriptor = FileGrinder(edlDir, "generated_$timeStamp.edl")
     init {
         println("EDL Writer initialized")
     }
@@ -11,7 +11,7 @@ class EdlWriter(private val xmlDir: String){
         fileDescriptor.write(headerString + "\n")
     }
 
-    fun writeBody(inPointEvents: ArrayList<EventBetweenSegments>,
+    fun writeBody(title: String, inPointEvents: ArrayList<EventBetweenSegments>,
                   outPointEvents: ArrayList<EventBetweenSegments>){
         println("Writing body...")
 
@@ -26,7 +26,7 @@ class EdlWriter(private val xmlDir: String){
                 val inPointTimeCode = inPointEvents[i].segmentFirstStart.timeStampTimeCode.addTimeCode(inPointEvents[i].timeCodeDiffEventVsSegments)
                 val outPointTimeCode = outPointEvents[i].segmentFirstStart.timeStampTimeCode.addTimeCode(outPointEvents[i].timeCodeDiffEventVsSegments)
                 val timeCodeDelta = outPointTimeCode.subtractTimeCode(inPointTimeCode)
-                val bodyLine1 = "${paddingSymbolFormatting(i, 3, '0')}  CDKMN24C V     C        " +
+                val bodyLine1 = "${paddingSymbolFormatting(i, 3, '0')}  $title V     C        " +
                         "$inPointTimeCode " +
                         "$outPointTimeCode " +
                         "$timeCodeDeltaSum " +
@@ -35,7 +35,7 @@ class EdlWriter(private val xmlDir: String){
                 // line 2 assemble
                 val timeStamp = inPointEvents[i].segmentFirstStart.timeStamp.split('.')[0].replace('T', ' ')
                 val bodyLine2 =
-                        "* FROM CLIP NAME: WOL LIV  $timeStamp ${inPointEvents[i].segmentFirstStart.fileName}"
+                        "* FROM CLIP NAME: $timeStamp ${inPointEvents[i].segmentFirstStart.fileName}"
                 fileDescriptor.append(bodyLine1 + "\n")
                 fileDescriptor.append(bodyLine2 + "\n")
                 timeCodeDeltaSum = timeCodeDeltaSum.addTimeCode(timeCodeDelta)
