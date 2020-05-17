@@ -16,7 +16,7 @@
       <Label layoutX="17.0" layoutY="237.0" text="Frames" />
       <Label layoutX="14.0" layoutY="277.0" text="XML" />
       <Label layoutX="16.0" layoutY="321.0" text="EDL" />
-      <ChoiceBox layoutX="86.0" layoutY="71.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="31.0" prefWidth="209.0">
+      <ChoiceBox fx:id="channel" layoutX="86.0" layoutY="71.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="31.0" prefWidth="209.0">
          <effect>
             <Blend />
          </effect>

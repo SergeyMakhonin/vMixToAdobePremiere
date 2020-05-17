@@ -14,10 +14,8 @@ class MainView : View() {
     override val root: Pane by fxml("MainView.fxml")
     private val channel: ChoiceBox<String> by fxid("channel")
     private val frames: TextField by fxid("frames")
-    private val xmlPath: TextField by fxid("xmlPath")
-    private val edlPath: TextField by fxid("edlPath")
 
     fun runMain(){
-        main(frames.text, xmlPath.text, edlPath.text, channel.selectionModel.selectedItem)
+        main(frames.text, channel.selectionModel.selectedItem)
     }
 }
