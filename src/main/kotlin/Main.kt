@@ -10,7 +10,7 @@ fun main(vararg configInput: String){
     val xmlPath = Key("xmlPath", stringType)
     val edlPath = Key("edlPath", stringType)
     val title = Key("title", stringType)
-    val channel = Key("titleNumber", stringType)
+    val channel = Key("channel", stringType)
     val config = systemProperties() overriding
             EnvironmentVariables() overriding
             ConfigurationProperties.fromFile(File("config.properties"))
@@ -33,6 +33,9 @@ fun main(vararg configInput: String){
         } else{
             finalConfig.setProperty("channel", configInput[1])
         }
+    } else {
+        finalConfig.setProperty("configuredFrames", config[configuredFrames])
+        finalConfig.setProperty("channel", config[channel])
     }
     finalConfig.setProperty("xmlPath", config[xmlPath])
     finalConfig.setProperty("edlPath", config[edlPath])
