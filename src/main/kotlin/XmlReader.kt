@@ -1,3 +1,4 @@
+
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
@@ -66,5 +67,22 @@ class XmlReader (xmlPath: String){
             }
         }
         return segments
+    }
+
+    fun getEventsFromSequencedList(property: String): ArrayList<Event> {
+        println("Getting Events for list #$property...")
+        val events: ArrayList<Event> = arrayListOf()
+
+        // create nodes list from found xml elements
+        val parsedLists: NodeList = xmlContent.getElementsByTagName("list")
+
+        // pick list according to property
+        val pickedList: Node = parsedLists.item(property.toInt()-1)
+        val eventsList = (pickedList as Element).getElementsByTagName("event")
+
+        println()
+
+
+        return events
     }
 }

@@ -46,8 +46,14 @@ fun main(vararg configInput: String){
     // read xml
     val xmlReader = XmlReader(finalConfig.getProperty("xmlPath"))
 
-    // get all events & segments
-    val events = xmlReader.getEvents()
+    // get events
+    val events = if (finalConfig.getProperty("channel") != "all"){
+        xmlReader.getEventsFromSequencedList(finalConfig.getProperty("channel"))
+    } else {
+        xmlReader.getEvents()
+    }
+
+    // get segments
     val segments = xmlReader.getSegments(finalConfig.getProperty("configuredFrames").toInt())
 
     // match events between segments
