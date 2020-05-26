@@ -80,9 +80,18 @@ class XmlReader (xmlPath: String){
         val pickedList: Node = parsedLists.item(property.toInt()-1)
         val eventsList = (pickedList as Element).getElementsByTagName("event")
 
-        println()
-
-
+        // loop via nodes list
+        for (i in 0 until eventsList.length) {
+            val parsedEvent: Node = eventsList.item(i)
+            if (parsedEvent.getNodeType() === Node.ELEMENT_NODE) {
+                val element = parsedEvent as Element
+                events.add(Event(
+                        inPointStartTime = element.getElementsByTagName("inPoint").item(0).textContent.toLong(),
+                        outPointStartTime = element.getElementsByTagName("outPoint").item(0).textContent.toLong(),
+                        id = element.getElementsByTagName("id").item(0).textContent.toInt()
+                ))
+            }
+        }
         return events
     }
 }
