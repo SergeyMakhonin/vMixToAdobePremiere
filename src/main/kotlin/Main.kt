@@ -47,7 +47,7 @@ fun main(vararg configInput: String){
     val xmlReader = XmlReader(finalConfig.getProperty("xmlPath"))
 
     // get events
-    val events = if (finalConfig.getProperty("channel") != "all"){
+    val events = if (finalConfig.getProperty("channel") != "All"){
         xmlReader.getEventsFromSequencedList(finalConfig.getProperty("channel"))
     } else {
         xmlReader.getEvents()
