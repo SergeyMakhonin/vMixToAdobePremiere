@@ -26,19 +26,20 @@ class EdlWriter(private val edlDir: String){
                 val inPointTimeCode = inPointEvents[i].segmentFirstStart.timeStampTimeCode.addTimeCode(inPointEvents[i].timeCodeDiffEventVsSegments)
                 val outPointTimeCode = outPointEvents[i].segmentFirstStart.timeStampTimeCode.addTimeCode(outPointEvents[i].timeCodeDiffEventVsSegments)
                 val timeCodeDelta = outPointTimeCode.subtractTimeCode(inPointTimeCode)
-                val bodyLine1 = "${paddingSymbolFormatting(i, 3, '0')}  $title V     C        " +
+                val lineIndex = i+1
+                val bodyLine1 = "${paddingSymbolFormatting(lineIndex, 3, '0')}  $title V     C        " +
                         "$inPointTimeCode " +
                         "$outPointTimeCode " +
                         "$timeCodeDeltaSum " +
                         "$timeCodeDelta"
 
                 // line 2 assemble
-                val timeStamp = inPointEvents[i].segmentFirstStart.timeStamp.split('.')[0].replace('T', ' ')
+                //val timeStamp = inPointEvents[i].segmentFirstStart.timeStamp.split('.')[0].replace('T', ' ')
                 val bodyLine2 =
                         "* FROM CLIP NAME: $title"
 
                 // line 3 assemble
-                val bodyLine3 = "${paddingSymbolFormatting(i, 3, '0')}  $title  A     C        " +
+                val bodyLine3 = "${paddingSymbolFormatting(lineIndex, 3, '0')}  $title  A     C        " +
                         "$inPointTimeCode " +
                         "$outPointTimeCode " +
                         "$timeCodeDeltaSum " +
@@ -48,7 +49,7 @@ class EdlWriter(private val edlDir: String){
                 val bodyLine4 = "* FROM CLIP NAME: $title"
 
                 // line 5 assemble
-                val bodyLine5 = "${paddingSymbolFormatting(i, 3, '0')}  $title  A2     C        " +
+                val bodyLine5 = "${paddingSymbolFormatting(lineIndex, 3, '0')}  $title  A2     C        " +
                         "$inPointTimeCode " +
                         "$outPointTimeCode " +
                         "$timeCodeDeltaSum " +
@@ -58,7 +59,7 @@ class EdlWriter(private val edlDir: String){
                 val bodyLine6 = "* FROM CLIP NAME: $title"
 
                 // line 7 assemble
-                val bodyLine7 = "${paddingSymbolFormatting(i, 3, '0')}  $title  NONE     C        " +
+                val bodyLine7 = "${paddingSymbolFormatting(lineIndex, 3, '0')}  $title  NONE     C        " +
                         "$inPointTimeCode " +
                         "$outPointTimeCode " +
                         "$timeCodeDeltaSum " +
@@ -71,7 +72,7 @@ class EdlWriter(private val edlDir: String){
                 val bodyLine9 = "AUD  3"
 
                 // line 10
-                val bodyLine10 = "${paddingSymbolFormatting(i, 3, '0')}  $title  NONE     C        " +
+                val bodyLine10 = "${paddingSymbolFormatting(lineIndex, 3, '0')}  $title  NONE     C        " +
                         "$inPointTimeCode " +
                         "$outPointTimeCode " +
                         "$timeCodeDeltaSum " +
