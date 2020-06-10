@@ -89,8 +89,10 @@ fun evaluateTimeCode(
     var hours: Int = secondsInTotal.toInt() / 3600
     // keep hours under 24
     if (hours >= 24){
-        hours=-23
-        println("Resolving TimeCode for $nanoseconds gave more than 23 hours, lowered to $hours")
+        while (hours>=24){
+            hours-=24
+        }
+        println("Resolving TimeCode for $nanoseconds gave more than 24 hours, lowered to $hours")
     }
 
     // need helper val to calculate seconds and minutes
